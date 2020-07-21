@@ -8,6 +8,8 @@ import NewDeck from './components/NewDeck'
 
 const Tab = createBottomTabNavigator();
 
+//TODO fix dependency issue on iOS related to this https://github.com/th3rdwave/react-native-safe-area-context/issues/110
+
 export default function App() {
   return (
     <NavigationContainer>

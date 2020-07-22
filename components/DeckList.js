@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
-import { Text, View, StyleSheet,Button, FlatList } from 'react-native'
+import { Text, View, StyleSheet,Button, TouchableOpacity } from 'react-native'
 import Deck from './Deck'
 import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+const Stack = createStackNavigator()
 
 class DeckListComponent extends Component {
 
@@ -12,7 +16,7 @@ class DeckListComponent extends Component {
     //TODO make ui update
     resetList =  async () => {
         await AsyncStorage.clear()
-        .then(async ()=>this.forceUpdate())
+        .then(async ()=>this.setState({decklist:{}}))
     }
     //This is more of a hacky way to do it, I am opting not to use redux for this, although redux would make it easier
     componentDidMount(){
@@ -40,18 +44,28 @@ class DeckListComponent extends Component {
         }
     }
 
-    renderDeck = (entry) => (
-        <Deck key={entry.item} title={entry.item[0]} />
-    );
+    onPress = (entry) => {
+        //TODO keep looking at this https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator
+        this.props.navigation.navigate("Deck List",{screen:'Deck',params:{entry}})
+    }
 
     render() {
         return (
             <View style={styles.container}>
-                <FlatList
-                    data={Object.entries(this.state.decklist)}
-                    renderItem={this.renderDeck}
-                    keyExtractor={item => item.title}
-                />
+
+                {this.state.decklist ?
+                    Object.entries(this.state.decklist).map(entry=>(
+                        <TouchableOpacity key={entry[0]} onPress={() => this.onPress(entry)}>
+                            <Text style={{padding:16,borderWidth:1,borderColor:'black',borderRadius:16,
+                            width:300,alignItems:'center',justifyContent:'center',marginBottom:16, fontSize:40, textAlign:'center'}}>
+                            {entry[0]}
+                            </Text>
+                        </TouchableOpacity>
+                    ))
+                :
+                    <Text>No Decks Exist</Text>
+                }
+                
                 <Button
                 title='reset list'
                 onPress={this.resetList}

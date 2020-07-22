@@ -5,7 +5,8 @@ import { StyleSheet, Text, View } from 'react-native'
 export default class Deck extends Component {
 
     state = {
-        title: ''
+        title: '',
+        info: {}
     }
 
     componentDidMount(){
@@ -13,23 +14,29 @@ export default class Deck extends Component {
     }
 
     getTitle = async () =>{
-        const title = this.props
+        const title = this.props.route.params.entry[0]
         try{
             const decklist = await AsyncStorage.getItem('MobileFlashcards:decklist')
             .then( (decklist)=>{
-                if(decklist){
-                    this.setState({title:decklist[title]})
-                }
+                this.updateInfo(decklist)
             })
         }catch(error){
             alert(error)
         }
     }
+
+    updateInfo = (info) => {
+        this.setState({title:info})
+    }
     //TODO remove quotation marks
     render(){
+        
         return (
-            <View style={{padding:16,borderWidth:1,borderColor:'black',borderRadius:16, width:'99%',alignItems:'center',justifyContent:'center',marginBottom:16}}>
-                <Text style={{fontSize:60}}>{JSON.stringify(this.props.title)}</Text>
+            <View style={{padding:16,borderWidth:1,borderColor:'black',borderRadius:16, width:300,alignItems:'center',justifyContent:'center',marginBottom:16}}>
+                {this.props.route.params.entry
+                ? <Text style={{fontSize:60}}>{this.props.route.params.entry[0]} Deck - {this.state.title}</Text>
+                : <Text>No data</Text>
+                }
             </View>
         )
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Button} from 'react-native'
+import { Text, View, StyleSheet, Button,KeyboardAvoidingView} from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import AsyncStorage from '@react-native-community/async-storage'
 import { useNavigation } from '@react-navigation/native';
@@ -31,7 +31,7 @@ class NewDeckComponent extends Component {
             }else{
                 newDeckList[[title]] = value
             }
-            alert("final step " + JSON.stringify(newDeckList))
+            //alert("final step " + JSON.stringify(newDeckList))
             //Update DeckList with new Deck
             AsyncStorage.mergeItem('MobileFlashcards:decklist',JSON.stringify(newDeckList))
 
@@ -46,7 +46,7 @@ class NewDeckComponent extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container}>
                 <Text style={styles.title}>What is the name of this deck?</Text>
                 <TextInput 
                 style={styles.input}
@@ -58,7 +58,7 @@ class NewDeckComponent extends Component {
                 onPress={this.submitNewDeck}
                 accessibilityLabel='Submit New Deck'
                 />
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }

@@ -1,30 +1,30 @@
-import { AsyncStorage } from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-community/async-storage'
 
-const DECK_STORAGE_KEY = 'mobile-flashcards:decklist'
-//not sure if needed yet
-//TODO continue looking at https://react-native-community.github.io/async-storage/docs/api to decide best approach
-const QUESTION_STORAGE_KEY = 'mobile-flashcards:questions'
+const DECK_STORAGE_KEY = 'MobileFlashcards:decklist'
+const QUESTION_STORAGE_KEY = 'MobileFlashcards:questions'
 
 
-export function getDeckList(){
-    return AsyncStorage.getItem(DECK_STORAGE_KEY)
+export const getDeckList = async () =>{
+    return await AsyncStorage.getItem(DECK_STORAGE_KEY)
+    .then(results => JSON.parse(results))
 }
 
-export function submitDeck ({key, name}){
-    return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
-        key: {
-            title: [key],
-            questions: []
-        }
-    }))
+export const submitDeck = async({key,value}) => {
+    
 }
 
-export function removeDeck (key) {
-    return AsyncStorage.getItem(DECK_STORAGE_KEY)
-    .then((results) => {
-      const data = JSON.parse(results)
-      data[key] = undefined
-      delete data[key]
-      AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data))
-    })
+export async function removeDeck (key) {
+    const results = await AsyncStorage.getItem(DECK_STORAGE_KEY)
+    const data = JSON.parse(results)
+    data[key] = undefined
+    delete data[key]
+    AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(data))
+}
+
+export const clearDeck = async () => {
+    try {
+        return await AsyncStorage.removeItem(DECK_STORAGE_KEY)
+    } catch (error) {
+        alert('error clearing data')
+    }
 }

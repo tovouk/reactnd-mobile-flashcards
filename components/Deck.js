@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native'
 
 
 export default class Deck extends Component {
@@ -58,10 +58,11 @@ export default class Deck extends Component {
                     <TouchableOpacity onPress={this.addCard}>
                         <Text style={styles.innerBtn}>Add Card</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.takeQuiz}>
-                        <Text style={styles.innerBtn}>Take Quiz</Text>
-                    </TouchableOpacity>
-                    
+                    {this.state.info.questions ?
+                    <TouchableOpacity disabled={this.state.info.questions.length === 0} onPress={this.takeQuiz}>
+                        <Text style={this.state.info.questions.length === 0 ? styles.disabled : styles.innerBtn}>Take Quiz</Text>
+                    </TouchableOpacity> : null
+                    }
                 </View>
                 : <Text style={styles.text}>No data</Text>
                 }
@@ -80,17 +81,23 @@ const styles = StyleSheet.create({
     },
     text: {
         textAlign:'center',
-        fontSize:80
+        fontSize:80,
+        width: Dimensions.get('window').width
     },
     numCards: {
         fontSize: 24,
         textAlign: 'center'
     },
     innerBtn: {
-        width: 300,
         fontSize:20,
         textAlign: 'center',
         color: 'blue',
+        marginTop: 16,
+    },
+    disabled: {
+        color: 'gray',
+        fontSize:20,
+        textAlign: 'center',
         marginTop: 16,
     }
 })

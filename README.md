@@ -4,6 +4,7 @@ This is a project for the React Nanodegree offered by Udacity
 
 This app will show a list of decks. Each deck contains a number of flashcards.
 Users can Add Questions (Flashcards) to a deck or quiz themselves with a deck's current flashcards.
+Upon finishing a quiz, a user can rety or go back to the deck screen.
 
 Users can create new decks as well.
 

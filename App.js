@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import React from 'react';
-import { Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,6 +10,8 @@ import Deck from './components/Deck'
 import AddQuestion from './components/AddQuestion'
 import Quiz from './components/Quiz'
 import QuizComplete from './components/QuizComplete'
+import {setLocalNotification,clearLocalNotification} from './utils/helpers'
+import * as Notifications from 'expo-notifications'
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -26,13 +28,20 @@ function HomeStack() {
   )
 }
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator initialRouteName="Deck List">
-        <Tab.Screen name="Deck List" component={HomeStack} />
-        <Tab.Screen name="New Deck" component={NewDeck} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  )
+export default class App extends Component{
+  
+  async componentDidMount(){
+    await setLocalNotification()
+  }
+
+  render(){
+    return (
+      <NavigationContainer>
+        <Tab.Navigator initialRouteName="Deck List">
+          <Tab.Screen name="Deck List" component={HomeStack} />
+          <Tab.Screen name="New Deck" component={NewDeck} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    )
+  }
 }

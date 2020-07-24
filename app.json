@@ -1,0 +1,16 @@
+{
+    "expo": {
+        "name": "Mobile Flashcards",
+        "version": "1.0.0",
+        "slug": "mobile-flashcards",
+        "ios": {
+            "bundleIdentifier": "com.josehinojo.mobileflashcards",
+            "buildNumber": "1.0.0"
+        },
+        "android": {
+            "package": "com.josehinojo.mobileflashcards",
+            "versionCode": 1,
+            "useNextNotificationsApi": true
+        }
+    }
+}

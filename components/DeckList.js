@@ -52,7 +52,7 @@ class DeckListComponent extends Component {
         return (
             <View style={styles.container}>
 
-                {this.state.decklist ?
+                {this.state.decklist && Object.keys(this.state.decklist).length > 0 ?
                     Object.entries(this.state.decklist).map(entry=>(
                         <TouchableOpacity key={entry[0]} onPress={() => this.onPress(entry)}>
                             <Text style={{padding:16,borderWidth:1,borderColor:'black',borderRadius:16,
@@ -62,7 +62,7 @@ class DeckListComponent extends Component {
                         </TouchableOpacity>
                     ))
                 :
-                    <Text>No Decks Exist</Text>
+                    <Text style={{fontSize:40}}>No Decks Exist</Text>
                 }
                 
                 <TouchableOpacity

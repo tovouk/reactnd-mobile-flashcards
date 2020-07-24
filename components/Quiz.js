@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet,Dimensions} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import {clearLocalNotification,setLocalNotification} from '../utils/helpers'
 
 export default class Quiz extends Component {
 
@@ -49,6 +50,8 @@ export default class Quiz extends Component {
     }
 
     backToDeck = () => {
+        clearLocalNotification()
+        setLocalNotification()
         this.props.navigation.pop()
     }
 

@@ -7,16 +7,21 @@ import { createStackNavigator } from '@react-navigation/stack';
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import Deck from './components/Deck'
+import AddQuestion from './components/AddQuestion'
+import Quiz from './components/Quiz'
+import QuizComplete from './components/QuizComplete'
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-//TODO fix dependency issue on iOS related to this https://github.com/th3rdwave/react-native-safe-area-context/issues/110
 
 function HomeStack() {
   return (
     <Stack.Navigator initialRouteName="Decks">
       <Stack.Screen name="Decks" component={DeckList} />
       <Stack.Screen name="Deck" component={Deck} />
+      <Stack.Screen name="AddQuestion" component={AddQuestion} />
+      <Stack.Screen name="Quiz" component={Quiz} />
+      <Stack.Screen name="QuizComplete" component={QuizComplete} />
     </Stack.Navigator>
   )
 }

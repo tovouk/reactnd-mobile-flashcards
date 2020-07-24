@@ -13,7 +13,7 @@ class DeckListComponent extends Component {
     state = {
         decklist: {}
     }
-    //TODO make ui update
+
     resetList =  async () => {
         await AsyncStorage.clear()
         .then(async ()=>this.setState({decklist:{}}))
@@ -45,7 +45,6 @@ class DeckListComponent extends Component {
     }
 
     onPress = (entry) => {
-        //TODO keep looking at this https://reactnavigation.org/docs/nesting-navigators#navigating-to-a-screen-in-a-nested-navigator
         this.props.navigation.navigate("Deck List",{screen:'Deck',params:{entry}})
     }
 
@@ -66,10 +65,10 @@ class DeckListComponent extends Component {
                     <Text>No Decks Exist</Text>
                 }
                 
-                <Button
-                title='reset list'
-                onPress={this.resetList}
-                />
+                <TouchableOpacity
+                onPress={this.resetList}>
+                <Text style={styles.innerBtn}>Reset List</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -81,6 +80,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 40,
         marginBottom: 40
+    },
+    innerBtn: {
+        color:'blue',
+        fontSize: 20
     }
 })
 
